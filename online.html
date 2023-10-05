@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Stationary Delivery</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      padding-top: 50px;
+      font-family: Arial, sans-serif;
+    }
+
+    .item-card {
+      margin-bottom: 20px;
+    }
+
+    .item-card img {
+      max-height: 200px;
+      object-fit: cover;
+    }
+
+    .item-card .item-name {
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+
+    .item-card .item-cost {
+      color: #007BFF;
+      font-weight: bold;
+    }
+
+    .remove-button {
+      background-color: #FF3333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Online Stationary Delivery</a>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <button class="btn btn-primary mb-3" id="addItemButton">Add Item</button>
+    <div id="itemContainer"></div>
+  </div>
+
+  <footer class="bg-dark text-light text-center py-3">
+    <p>&copy; 2023 Online Stationary Delivery. All rights reserved.</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // Example items data (you can replace this with your own data)
+    const itemsData = [
+      {
+        name: "Pen",
+        cost: "$1.99",
+        image: "https://via.placeholder.com/200",
+      },
+      {
+        name: "Notebook",
+        cost: "$2.49",
+        image: "https://via.placeholder.com/200",
+      },
+      // Add more items here
+    ];
+
+    function createItemCard(item) {
+      const card = document.createElement("div");
+      card.classList.add("card", "item-card");
+
+      const image = document.createElement("img");
+      image.classList.add("card-img-top");
+      image.src = item.image;
+      card.appendChild(image);
+
+      const cardBody = document.createElement("div");
+      cardBody.classList.add("card-body");
+
+      const itemName = document.createElement("h5");
+      itemName.classList.add("card-title", "item-name");
+      itemName.textContent = item.name;
+      cardBody.appendChild(itemName);
+
+      const itemCost = document.createElement("p");
+      itemCost.classList.add("card-text", "item-cost");
+      itemCost.textContent = item.cost;
+      cardBody.appendChild(itemCost);
+
+      const removeButton = document.createElement("button");
+      removeButton.classList.add("btn", "btn-danger", "remove-button");
+      removeButton.textContent = "Remove Item";
+      cardBody.appendChild(removeButton);
+
+      card.appendChild(cardBody);
+
+      return card;
+    }
+
+    function renderItems() {
+      const itemContainer = document.getElementById("itemContainer");
+      itemContainer.innerHTML = "";
+
+      itemsData.forEach(item => {
+        const itemCard = createItemCard(item);
+        itemContainer.appendChild(itemCard);
+
+        // Add event listener to remove item on "Remove Item" button click
+        const removeButton = itemCard.querySelector(".remove-button");
+        removeButton.addEventListener("click", () => {
+          itemContainer.removeChild(itemCard);
+        });
+      });
+    }
+
+    document.getElementById("addItemButton").addEventListener("click", () => {
+      const newItem = {
+        name: "New Item",
+        cost: "$0.00",
+        image: "https://via.placeholder.com/200",
+      };
+      itemsData.push(newItem);
+      renderItems();
+    });
+
+    // Initial rendering of items
+    renderItems();
+  </script>
+</body>
+</html>
